@@ -23,35 +23,28 @@ contract MockERC20 is ERC20 {
     }
 }
 
-// Mock Aerodrome Router that simulates swaps
-contract MockAerodromeRouter {
+// Mock Uniswap V3 SwapRouter
+contract MockSwapRouter {
     MockERC20 public clawd;
-    uint256 public clawdPerUsdc; // How many CLAWD per 1 USDC (in CLAWD decimals per USDC decimal)
+    uint256 public clawdPerUsdc;
 
     constructor(address _clawd, uint256 _rate) {
         clawd = MockERC20(_clawd);
         clawdPerUsdc = _rate;
     }
 
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256,
-        IAerodromeRouter.Route[] calldata,
-        address to,
-        uint256
-    ) external returns (uint256[] memory amounts) {
-        // Transfer USDC from caller
-        IERC20(IAerodromeRouter.Route({from: address(0), to: address(0), stable: false, factory: address(0)}).from);
+    struct ExactInputParams {
+        bytes path;
+        address recipient;
+        uint256 deadline;
+        uint256 amountIn;
+        uint256 amountOutMinimum;
+    }
 
-        // Simple: mint CLAWD to recipient based on rate
-        // amountIn is in USDC (6 decimals), output is CLAWD (18 decimals)
-        // rate: clawdPerUsdc CLAWD-wei per USDC-wei
-        uint256 clawdOut = amountIn * clawdPerUsdc;
-        clawd.mint(to, clawdOut);
-
-        amounts = new uint256[](2);
-        amounts[0] = amountIn;
-        amounts[1] = clawdOut;
+    function exactInput(ExactInputParams calldata params) external payable returns (uint256 amountOut) {
+        // Simple mock: mint CLAWD to recipient based on rate
+        amountOut = params.amountIn * clawdPerUsdc;
+        clawd.mint(params.recipient, amountOut);
     }
 }
 
@@ -60,7 +53,8 @@ contract CLAWDRushTest is Test {
     MockPyth public mockPyth;
     MockERC20 public usdc;
     MockERC20 public clawd;
-    MockAerodromeRouter public router;
+    MockSwapRouter public router;
+    address public weth = makeAddr("weth");
 
     address public alice = makeAddr("alice");
     address public bob = makeAddr("bob");
@@ -78,9 +72,7 @@ contract CLAWDRushTest is Test {
         clawd = new MockERC20("CLAWD", "CLAWD", 18);
 
         // Router: 1 USDC = 13,000 CLAWD (roughly $0.000077 per CLAWD)
-        // 1e6 USDC-wei * rate = CLAWD-wei
-        // rate = 13000 * 1e12 = 13e15 (to account for decimal difference 18-6=12)
-        router = new MockAerodromeRouter(address(clawd), 13000 * 1e12);
+        router = new MockSwapRouter(address(clawd), 13000 * 1e12);
 
         // Deploy CLAWDRush
         vm.prank(owner);
@@ -88,7 +80,8 @@ contract CLAWDRushTest is Test {
             address(usdc),
             address(clawd),
             address(mockPyth),
-            address(router)
+            address(router),
+            weth
         );
 
         // Fund alice and bob with ETH and USDC

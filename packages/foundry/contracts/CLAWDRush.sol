@@ -43,7 +43,8 @@ contract CLAWDRush is ReentrancyGuard {
     IERC20 public immutable usdc;
     IERC20 public immutable clawd;
     IPyth public immutable pyth;
-    address public immutable dexRouter; // Aerodrome/Uniswap V2 router
+    address public immutable dexRouter; // Uniswap V3 SwapRouter
+    address public immutable weth;
 
     // --- State ---
     address public owner;
@@ -99,12 +100,14 @@ contract CLAWDRush is ReentrancyGuard {
         address _usdc,
         address _clawd,
         address _pyth,
-        address _dexRouter
+        address _dexRouter,
+        address _weth
     ) {
         usdc = IERC20(_usdc);
         clawd = IERC20(_clawd);
         pyth = IPyth(_pyth);
         dexRouter = _dexRouter;
+        weth = _weth;
         owner = msg.sender;
     }
 
@@ -280,43 +283,40 @@ contract CLAWDRush is ReentrancyGuard {
         // Approve router to spend USDC
         usdc.forceApprove(dexRouter, usdcAmount);
 
-        // Aerodrome Router uses Route struct
-        IAerodromeRouter.Route[] memory routes = new IAerodromeRouter.Route[](1);
-        routes[0] = IAerodromeRouter.Route({
-            from: address(usdc),
-            to: address(clawd),
-            stable: false, // Volatile pair
-            factory: address(0) // Use default factory
+        // Route: USDC → WETH (V3, 0.05% fee) → CLAWD (V3, 1% fee)
+        // Using Uniswap V3 SwapRouter exactInput with multi-hop path
+        bytes memory path = abi.encodePacked(
+            address(usdc),
+            uint24(500),      // 0.05% fee tier USDC/WETH
+            weth,
+            uint24(10000),    // 1% fee tier WETH/CLAWD
+            address(clawd)
+        );
+
+        ISwapRouter.ExactInputParams memory params = ISwapRouter.ExactInputParams({
+            path: path,
+            recipient: address(this),
+            deadline: block.timestamp + 300,
+            amountIn: usdcAmount,
+            amountOutMinimum: 0 // Base sequencer provides MEV protection
         });
 
-        // Base sequencer provides MEV protection, so amountOutMin=0 is acceptable
-        IAerodromeRouter(dexRouter).swapExactTokensForTokens(
-            usdcAmount,
-            0,
-            routes,
-            address(this),
-            block.timestamp + 300
-        );
+        ISwapRouter(dexRouter).exactInput(params);
     }
 
     /// @notice Allow contract to receive ETH (for Pyth fee refunds)
     receive() external payable {}
 }
 
-/// @notice Minimal Aerodrome Router interface
-interface IAerodromeRouter {
-    struct Route {
-        address from;
-        address to;
-        bool stable;
-        address factory;
+/// @notice Minimal Uniswap V3 SwapRouter interface
+interface ISwapRouter {
+    struct ExactInputParams {
+        bytes path;
+        address recipient;
+        uint256 deadline;
+        uint256 amountIn;
+        uint256 amountOutMinimum;
     }
 
-    function swapExactTokensForTokens(
-        uint256 amountIn,
-        uint256 amountOutMin,
-        Route[] calldata routes,
-        address to,
-        uint256 deadline
-    ) external returns (uint256[] memory amounts);
+    function exactInput(ExactInputParams calldata params) external payable returns (uint256 amountOut);
 }

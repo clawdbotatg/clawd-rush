@@ -8,15 +8,15 @@ import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 
 export const metadata = getMetadata({
-  title: 'Scaffold-ETH 2 App',
-  description: 'Built with 🏗 Scaffold-ETH 2'
+  title: '⚡ CLAWDRush — 1-Min UP/DOWN Game',
+  description: 'Bet USDC on ETH or BTC price direction. Win 1.76× in $CLAWD. Powered by Pyth oracles on Base.'
 });
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning className={``}>
       <body>
-        <ThemeProvider enableSystem>
+        <ThemeProvider forcedTheme="dark" enableSystem={false}>
           <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
         </ThemeProvider>
       </body>

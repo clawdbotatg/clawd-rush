@@ -4,6 +4,754 @@
  */
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const deployedContracts = {} as const;
+const deployedContracts = {
+  31337: {
+    CLAWDRush: {
+      address: "0x25d23b63f166ec74b87b40cbcc5548d29576c56c",
+      abi: [
+        {
+          type: "constructor",
+          inputs: [
+            {
+              name: "_usdc",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_clawd",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_pyth",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_dexRouter",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "_weth",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "receive",
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "BTC_ASSET",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "BTC_USD_FEED",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "ETH_ASSET",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "ETH_USD_FEED",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "MAX_BET",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "MAX_PRICE_AGE",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "MIN_BET",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "PAYOUT_BPS",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "RESOLVE_DELAY",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint64",
+              internalType: "uint64",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "RESOLVE_WINDOW",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint64",
+              internalType: "uint64",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "bets",
+          inputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "player",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "asset",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "direction",
+              type: "uint8",
+              internalType: "enum CLAWDRush.Direction",
+            },
+            {
+              name: "usdcAmount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "strikePrice",
+              type: "int64",
+              internalType: "int64",
+            },
+            {
+              name: "strikeExpo",
+              type: "int32",
+              internalType: "int32",
+            },
+            {
+              name: "strikeTime",
+              type: "uint64",
+              internalType: "uint64",
+            },
+            {
+              name: "resolveTime",
+              type: "uint64",
+              internalType: "uint64",
+            },
+            {
+              name: "resolved",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "won",
+              type: "bool",
+              internalType: "bool",
+            },
+            {
+              name: "clawdPayout",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "clawd",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "contract IERC20",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "dexRouter",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "fundHouse",
+          inputs: [
+            {
+              name: "amount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "getBets",
+          inputs: [
+            {
+              name: "betIds",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          outputs: [
+            {
+              name: "result",
+              type: "tuple[]",
+              internalType: "struct CLAWDRush.Bet[]",
+              components: [
+                {
+                  name: "player",
+                  type: "address",
+                  internalType: "address",
+                },
+                {
+                  name: "asset",
+                  type: "bytes32",
+                  internalType: "bytes32",
+                },
+                {
+                  name: "direction",
+                  type: "uint8",
+                  internalType: "enum CLAWDRush.Direction",
+                },
+                {
+                  name: "usdcAmount",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+                {
+                  name: "strikePrice",
+                  type: "int64",
+                  internalType: "int64",
+                },
+                {
+                  name: "strikeExpo",
+                  type: "int32",
+                  internalType: "int32",
+                },
+                {
+                  name: "strikeTime",
+                  type: "uint64",
+                  internalType: "uint64",
+                },
+                {
+                  name: "resolveTime",
+                  type: "uint64",
+                  internalType: "uint64",
+                },
+                {
+                  name: "resolved",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "won",
+                  type: "bool",
+                  internalType: "bool",
+                },
+                {
+                  name: "clawdPayout",
+                  type: "uint256",
+                  internalType: "uint256",
+                },
+              ],
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "getPlayerBets",
+          inputs: [
+            {
+              name: "player",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256[]",
+              internalType: "uint256[]",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "houseBalance",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "nextBetId",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "owner",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "placeBet",
+          inputs: [
+            {
+              name: "asset",
+              type: "bytes32",
+              internalType: "bytes32",
+            },
+            {
+              name: "direction",
+              type: "uint8",
+              internalType: "enum CLAWDRush.Direction",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "priceUpdateData",
+              type: "bytes[]",
+              internalType: "bytes[]",
+            },
+          ],
+          outputs: [
+            {
+              name: "betId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "playerBets",
+          inputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "pyth",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "contract IPyth",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "resolveBet",
+          inputs: [
+            {
+              name: "betId",
+              type: "uint256",
+              internalType: "uint256",
+            },
+            {
+              name: "priceUpdateData",
+              type: "bytes[]",
+              internalType: "bytes[]",
+            },
+          ],
+          outputs: [],
+          stateMutability: "payable",
+        },
+        {
+          type: "function",
+          name: "transferOwnership",
+          inputs: [
+            {
+              name: "newOwner",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "function",
+          name: "usdc",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "contract IERC20",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "weth",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+          stateMutability: "view",
+        },
+        {
+          type: "function",
+          name: "withdrawHouse",
+          inputs: [
+            {
+              name: "amount",
+              type: "uint256",
+              internalType: "uint256",
+            },
+          ],
+          outputs: [],
+          stateMutability: "nonpayable",
+        },
+        {
+          type: "event",
+          name: "BetPlaced",
+          inputs: [
+            {
+              name: "betId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "player",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "asset",
+              type: "bytes32",
+              indexed: false,
+              internalType: "bytes32",
+            },
+            {
+              name: "direction",
+              type: "uint8",
+              indexed: false,
+              internalType: "enum CLAWDRush.Direction",
+            },
+            {
+              name: "usdcAmount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+            {
+              name: "strikePrice",
+              type: "int64",
+              indexed: false,
+              internalType: "int64",
+            },
+            {
+              name: "resolveTime",
+              type: "uint64",
+              indexed: false,
+              internalType: "uint64",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "BetResolved",
+          inputs: [
+            {
+              name: "betId",
+              type: "uint256",
+              indexed: true,
+              internalType: "uint256",
+            },
+            {
+              name: "player",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "won",
+              type: "bool",
+              indexed: false,
+              internalType: "bool",
+            },
+            {
+              name: "finalPrice",
+              type: "int64",
+              indexed: false,
+              internalType: "int64",
+            },
+            {
+              name: "clawdPayout",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "HouseFunded",
+          inputs: [
+            {
+              name: "funder",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "event",
+          name: "HouseWithdrawn",
+          inputs: [
+            {
+              name: "owner",
+              type: "address",
+              indexed: true,
+              internalType: "address",
+            },
+            {
+              name: "amount",
+              type: "uint256",
+              indexed: false,
+              internalType: "uint256",
+            },
+          ],
+          anonymous: false,
+        },
+        {
+          type: "error",
+          name: "BetAlreadyResolved",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "BetTooLarge",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "BetTooSmall",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "InsufficientHouseFunds",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "InvalidAsset",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "InvalidBetId",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "OnlyOwner",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "ReentrancyGuardReentrantCall",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "ResolveWindowExpired",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "SafeERC20FailedOperation",
+          inputs: [
+            {
+              name: "token",
+              type: "address",
+              internalType: "address",
+            },
+          ],
+        },
+        {
+          type: "error",
+          name: "SwapFailed",
+          inputs: [],
+        },
+        {
+          type: "error",
+          name: "TooEarlyToResolve",
+          inputs: [],
+        },
+      ],
+      inheritedFunctions: {},
+      deployedOnBlock: 41867057,
+    },
+  },
+} as const;
 
 export default deployedContracts satisfies GenericContractsDeclaration;
